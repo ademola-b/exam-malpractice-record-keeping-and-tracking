@@ -1,0 +1,63 @@
+<div id="modalSamp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Add User</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <hr/>
+        <div class="modal-body">
+          <form method="post" enctype="multipart/form-data" class="forms-sample">
+            {% csrf_token %}
+              <div class="form-group">
+                {% if form.name.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.name.errors }}
+                  </div>
+                {% endif %}
+                <label class="col-sm-2" for="name">Name</label>
+                {{form.name}}
+              </div>
+
+              <div class="form-group">
+                {% if form.email.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.email.errors }}
+                  </div>
+                {% endif %}
+                <label for="email">Email</label>
+                {{form.email}}
+              </div>
+
+              
+              <div class="form-group">
+                {% if form.department.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.department.errors }}
+                  </div>
+                {% endif %}
+                <label for="department">Department</label>
+                {{form.department}}
+              </div>
+
+              <div class="form-group">
+                {% if form.picture.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.picture.errors }}
+                  </div>
+                {% endif %}
+                <label class="col-sm-2 col-form-label" for="basic-default-name">Image</label>
+                {{form.picture}}
+              </div>              
+              
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+          </form>
+        </div>
+      </div>
+  
+    </div>
+  </div>

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+
+{% block body %}
+{% comment %} <div class="container-scroller"> {% endcomment %}
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'utils/navbar.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      {% include 'utils/aside.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+            
+          <div class="row">  
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Fill Form</h4>
+                  <h5 class="font-weight-normal mb-5">Fill below form to add the culprit to the database. <span class="text-warning">make the picture clearer</span></h5>
+                    <form method="POST" class="forms-sample" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'utils/messages.html' %}
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                {% if form.name.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.name.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="name">Name</label>
+                                {{form.name}}
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                {% if form.registration_no.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.registration_no.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="registration_no">Registration No</label>
+                                {{form.registration_no}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                {% if form.department.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.department.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="department">Department</label>
+                                {{form.department}}
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                {% if form.session.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.session.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="session">Session</label>
+                                {{form.session}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                {% if form.image.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.image.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="image">Student Image</label>
+                                {{form.image}}
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                {% if form.description.errors %}
+                                <div class="alert alert-danger mt-2" role="alert">
+                                    {{ form.description.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="description">Note</label>
+                                {{form.description}}
+                            </div>
+                        </div>
+
+                        
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        
+                    </form>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        {% include 'utils/footer.html' %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  {% comment %} </div> {% endcomment %}
+{% endblock body %}

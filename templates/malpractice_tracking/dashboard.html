@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+
+{% block body %}
+    {% comment %} <div class="container-scroller"> {% endcomment %}
+        <!-- partial:partials/_navbar.html -->
+        {% include 'utils/navbar.html' %}
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+          <!-- partial:partials/_settings-panel.html -->
+          <div class="theme-setting-wrapper">
+     
+        </div>
+      
+          <!-- partial -->
+          <!-- partial:partials/_sidebar.html -->
+          {% include 'utils/aside.html' %}
+          <!-- partial -->
+          <div class="main-panel">
+            <div class="content-wrapper">
+              <div class="row">
+                <div class="col-md-12 grid-margin">
+                  <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                      <h3 class="font-weight-bold">Welcome {{request.user}}</h3>
+                      <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                    </div>
+             
+                  </div>
+                </div>
+              </div>
+              {% include 'utils/messages.html' %}
+              
+              <div class="row">
+                {% if mssg %}
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap">
+                            <p class="card-title text-danger">{{mssg}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% elif user_institution %}
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Students Added</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">Users</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <p class="card-title">Hello</p>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                {% endif %}
+              </div>             
+                
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            {% include 'utils/footer.html' %}
+            <!-- partial -->
+          </div>
+          <!-- main-panel ends -->
+        </div>   
+        <!-- page-body-wrapper ends -->
+      {% comment %} </div> {% endcomment %}
+      <!-- container-scroller -->
+    
+{% endblock body %}

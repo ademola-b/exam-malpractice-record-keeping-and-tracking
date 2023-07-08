@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+
+{% block body %}
+{% comment %} <div class="container-scroller"> {% endcomment %}
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'utils/navbar.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      {% include 'utils/aside.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row mb-4 ">
+                <div class="col-12 ">
+                    <button type="button" class="btn btn-primary float-right btn-rounded btn-fw" data-toggle="modal" data-target="#modalSamp">Add User</button>
+                    {% include 'utils/new_user.html' %}
+                </div>
+            </div>
+          <div class="row">
+            
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Manage Users</h4>
+                  <h5 class="font-weight-normal mb-5">The below list contains users in your institution</h5>
+                    {% if institution_users %}
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th> Image</th>
+                                    <th>Name</th>
+                                    <th>Department</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in institution_users %}
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{user.picture.url}}" alt="image"/>
+                                    </td>
+                                    <td>{{user.name}} </td>
+                                    <td>
+                                    {{user.department}}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-warning"><i class="menu-icon tf-icons bx bxs-pencil"></i>Update</a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{forloop.counter}}"><i class="menu-icon tf-icons bx bxs-trash"></i>Delete</button>
+
+                                        <div id="delete{{forloop.counter}}" class="modal fade" role="dialog">
+                                          <div class="modal-dialog">
+                                        
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <h4 class="modal-title">Delete User</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                              </div>
+                                              <hr/>
+                                              <div class="modal-body">
+                                                <form action="{% url 'accounts:delete_user' user.user_id.user_id %}" method="post">
+                                                  {% csrf_token %}
+                                                    
+                                                    <div class="row mb-3">
+                                                      <h5>Are you sure you want to delete {{user.name}}?</h4>
+                                                    </div>
+                                                      <hr/>
+                                                      <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                                      </div>
+                                                </form>
+                                              </div>
+                                            </div>
+                                        
+                                          </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                    {% else %}
+                        <h3 class="card-title text-danger">No User found</h3>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        {% include 'utils/footer.html' %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  {% comment %} </div> {% endcomment %}
+{% endblock body %}

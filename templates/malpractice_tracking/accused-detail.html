@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+{% block title %}
+    Accused Detail
+{% endblock title %}
+
+{% block body %}
+{% comment %} <div class="container-scroller"> {% endcomment %}
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'utils/navbar.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      {% include 'utils/aside.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+       
+            {% include 'utils/messages.html' %}
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Accused Detail</h4>
+                  <h5 class="font-weight-normal mb-5">Detail of the student caught in examination malpractice act</h5>
+                    <div class="row mb-4 ">
+                     <div class="col-md-6">
+                      <img src="{{fillformmodel.image.url}}" alt="accused's image", width="400", height="400">
+                     </div>
+                     <div class="col-md-6">
+                      <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                              <th>NAME</th>
+                              <td>{{fillformmodel.name}}</td>
+                            </tr>
+                         
+                            <tr>
+                              <th>INSTITUTION</th>
+                              <td>{{fillformmodel.institution_id}}</td>
+                            </tr>
+                         
+                            <tr>
+                              <th>DEPARTMENT</th>
+                              <td>{{fillformmodel.department}}</td>
+                            </tr>
+                         
+                            <tr>
+                              <th>REGISTRATION NO</th>
+                              <td>{{fillformmodel.registration_no}}</td>
+                            </tr>
+                         
+                          
+                            <tr>
+                              <th>SESSION</th>
+                              <td>{{fillformmodel.session}}</td>
+                            </tr>
+                         
+                            <tr>
+                              <th>DESCRIPTION</th>
+                              <td>{{fillformmodel.description}}</td>
+                            </tr>
+                         
+                            <tr>
+                              <th>STATUS</th>
+                              {% if fillformmodel.status == 'neutral' %}
+                                  <td><p class="badge badge-warning">{{fillformmodel.status}}</p></td>
+                                {% elif fillformmodel.status == 'accused' %}
+                                  <td><p class="badge badge-danger">{{fillformmodel.status}}</p></td>
+                                {% else %}
+                                  <td><p class="badge badge-success">{{fillformmodel.status}}</p></td>
+                              {% endif %}
+                            </tr>
+                        </table>
+                      </div>
+                     </div>
+                    </div>
+                    
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        {% include 'utils/footer.html' %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  {% comment %} </div> {% endcomment %}
+{% endblock body %}

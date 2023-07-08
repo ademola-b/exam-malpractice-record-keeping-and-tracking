@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+
+{% block body %}
+{% comment %} <div class="container-scroller"> {% endcomment %}
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'utils/navbar.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      {% include 'utils/aside.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+       
+            {% include 'utils/messages.html' %}
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Accused List</h4>
+                  <h5 class="font-weight-normal mb-5">Below is a list of students accused for examination malpractice.</h5>
+                    {% if accusedList %}
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Registration Number</th>
+                                    <th>Department</th>
+                                    <th>Session</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    {% if request.user.is_institution_admin %}
+                                        <th>Posted By</th>
+                                        <th>Action</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for accused in accusedList %}
+                                <tr>
+                                    <td class="py-1">
+                                        <img src="{{accused.image.url}}" alt="image"/>
+                                    </td>
+                                    <td>{{accused.name}} </td>
+                                    <td>{{accused.registration_no}}</td>
+                                    <td>{{accused.department}}</td>
+                                    <td>{{accused.session}}</td>
+                                    <td>{{accused.description}}</td>
+                                    <td>{{accused.status}}</td>
+                                    {% if request.user.is_institution_admin %}
+                                        <td>{{accused.posted_by}}</td>
+                                        <td>
+                                            <a href="{% url 'malpractice:update_accused' accused.form_id %}" class="btn btn-warning"><i class="menu-icon tf-icons bx bxs-pencil"></i>Update</a>
+                                            {% comment %} <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#update{{accused.form_id}}"><i class="menu-icon tf-icons bx bxs-trash"></i>Update Status</button> {% endcomment %}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{forloop.counter}}"><i class="menu-icon tf-icons bx bxs-trash"></i>Delete</button>
+  
+                                            <div id="delete{{forloop.counter}}" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Accused</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <hr/>
+                                                    <div class="modal-body">
+                                                        <form action="{% url 'malpractice:delete_accused' accused.pk %}" method="post">
+                                                        {% csrf_token %}
+                                                            <div class="row mb-3">
+                                                            <h5>Are you sure you want to delete {{accused.name}}?</h4>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-danger">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                        </div>
+                     
+                    {% else %}
+                        <h3 class="card-title text-danger">No Accused Student Found</h3>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        {% include 'utils/footer.html' %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  {% comment %} </div> {% endcomment %}
+{% endblock body %}
