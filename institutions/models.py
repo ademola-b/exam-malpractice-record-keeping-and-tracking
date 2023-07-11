@@ -1,8 +1,6 @@
 import uuid
 from django.db import models
 
-# from accounts.models import User
-
 # Create your models here.
 
 class Department(models.Model):
@@ -34,7 +32,7 @@ class InstitutionUser(models.Model):
     institution_id = models.ForeignKey(to=InstitutionProfile, on_delete=models.CASCADE, null=True, blank=True)
     institution_user_id = models.UUIDField(default=uuid.uuid4, primary_key=True, unique=True, editable=False)
     name = models.CharField(max_length=100)
-    picture = models.ImageField(default="img/default.jpg", null=True, blank=True)
+    picture = models.ImageField(default="img/default.jpg", upload_to='img/profile_pic', null=True, blank=True)
     department = models.ForeignKey(to=Department, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):

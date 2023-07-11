@@ -1,13 +1,13 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
-      <li class="nav-item">
+      <li class="nav-item {% if request.path == '/malpractice/' %}active{% endif %}">
         <a class="nav-link" href="{% url 'malpractice:dashboard' %}">
           <i class="icon-grid menu-icon"></i>
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
       {% if request.user.is_institution_admin %}
-        <li class="nav-item">
+        <li class="nav-item {% if 'manage-users' in request.path %}active{% endif %}">
             <a class="nav-link" href="{% url 'malpractice:manage_users' %}">
             <i class="icon-paper menu-icon"></i>
             <span class="menu-title">Manage Users</span>
@@ -15,8 +15,8 @@
         </li>
       {% endif %}
 
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+      <li class="nav-item {% if 'accused-list' in request.path or 'fill-form' in request.path %}active{% endif %} ">
+        <a class="nav-link " data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
           <i class="icon-columns menu-icon"></i>
           <span class="menu-title">Accused</span>
           <i class="menu-arrow"></i>
@@ -34,7 +34,7 @@
       </li>
       
       {% if request.user.is_institution_admin %}
-        <li class="nav-item">
+        <li class="nav-item {% if 'track-accused' in request.path or 'accused-detail' in request.path %}active{% endif %}">
           <a class="nav-link" href="{% url 'malpractice:track_accused' %}">
             <i class="icon-paper menu-icon"></i>
             <span class="menu-title">Track Accused</span>

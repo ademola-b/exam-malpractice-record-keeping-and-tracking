@@ -22,7 +22,7 @@ class FillFormModel(models.Model):
     status = models.CharField(max_length=20, choices=[('absolved', 'absolved'),('accused', 'accused'), ('neutral', 'neutral')])
 
     class Meta:
-        verbose_name_plural = "Fill Form"
+        verbose_name_plural = "Accused Student Form"
 
     def __str__(self) -> str:
         return f"{self.name} from {self.institution_id.name}"

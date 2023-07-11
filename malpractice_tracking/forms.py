@@ -38,7 +38,7 @@ class FillFormDes(forms.ModelForm):
             'description'
          ]
 
-         
+
 
 class UpdateAccusedStatusForm(forms.ModelForm):
 
@@ -46,12 +46,14 @@ class UpdateAccusedStatusForm(forms.ModelForm):
                      ('accused', 'accused'),
                      ('neutral', 'neutral')]
 
+    image = forms.ImageField(required=False, widget=forms.FileInput(attrs={'id':'image', 'class':'form-control' }))
     status = forms.ChoiceField(choices=status_choice, required=False, widget=forms.Select(attrs={'class':'form-control'}))
     description = forms.CharField(widget=forms.Textarea(attrs={'id': 'note', 'class': 'form-control', 'placeholder':'Additional Note'}))
 
     class Meta:
         model = FillFormModel
         fields = [
+            'image',
             'status',
             'description'
         ]
@@ -69,7 +71,7 @@ class FileHandler:
                 if col == '':raise forms.ValidationError('Invalid CSV, Missing DATA!!')
         
 class ApplicantsNameFile(forms.Form):
-    file = forms.FileField(required=True, help_text='Select Applicants File', widget=forms.FileInput(attrs={'name':'file', 'class':'form-control', 'accept':'.csv'}))
+    name_file = forms.FileField(required=False, help_text='Select Applicants File', widget=forms.FileInput(attrs={'name':'name_file', 'class':'form-control', 'accept':'.csv'}))
 
     def clean_file(self):
         file = io.TextIOWrapper(self.cleaned_data.get('file').file)
@@ -79,4 +81,8 @@ class ApplicantsNameFile(forms.Form):
         handler.validate_file()
 
         return file
+
+class AccusedImageFile(forms.Form):
+    image_file = forms.FileField(required=False, help_text='Select Individual Image', widget=forms.FileInput(attrs={'name':'image_file', 'class':'form-control'}))
+    
 

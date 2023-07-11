@@ -26,8 +26,9 @@
             <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Manage Users</h4>
+                  <h4 class="card-title text-primary">Manage Users</h4>
                   <h5 class="font-weight-normal mb-5">The below list contains users in your institution</h5>
+                  {% include 'utils/messages.html' %}
                     {% if institution_users %}
                         <div class="table-responsive">
                         <table class="table table-striped">
@@ -50,9 +51,11 @@
                                     {{user.department}}
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-warning"><i class="menu-icon tf-icons bx bxs-pencil"></i>Update</a>
+                                        {% comment %} <a href="#" class="btn btn-warning"><i class="menu-icon tf-icons bx bxs-pencil"></i>Update</a> {% endcomment %}
+                                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#update{{forloop.counter}}"><i class="menu-icon tf-icons bx bxs-trash"></i>Update</button>
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{forloop.counter}}"><i class="menu-icon tf-icons bx bxs-trash"></i>Delete</button>
 
+                                        {% include 'utils/update-user-modal.html' %}
                                         <div id="delete{{forloop.counter}}" class="modal fade" role="dialog">
                                           <div class="modal-dialog">
                                         
@@ -66,11 +69,9 @@
                                               <div class="modal-body">
                                                 <form action="{% url 'accounts:delete_user' user.user_id.user_id %}" method="post">
                                                   {% csrf_token %}
-                                                    
                                                     <div class="row mb-3">
                                                       <h5>Are you sure you want to delete {{user.name}}?</h4>
                                                     </div>
-                                                      <hr/>
                                                       <div class="modal-footer">
                                                         <button type="submit" class="btn btn-danger">Submit</button>
                                                       </div>
@@ -87,7 +88,7 @@
                         </table>
                         </div>
                     {% else %}
-                        <h3 class="card-title text-danger">No User found</h3>
+                        <h3 class="card-title text-danger text-center">No User found</h3>
                     {% endif %}
                 </div>
               </div>

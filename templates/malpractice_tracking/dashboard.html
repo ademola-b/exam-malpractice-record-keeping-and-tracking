@@ -26,8 +26,7 @@
                 <div class="col-md-12 grid-margin">
                   <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                      <h3 class="font-weight-bold">Welcome {{request.user}}</h3>
-                      <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                      <h3 class="font-weight-bold text-primary">Welcome, {{request.user}}</h3>
                     </div>
              
                   </div>
@@ -50,23 +49,34 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Students Added</p>
+                            <p class="card-title text-primary">Students Added</p>
+                            <span class="badge badge-warning"><h4 class="text-primary">Total Students: {{students}} </h4></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-title">Users</p>
+                            <p class="card-title text-primary">Users</p>
+                            <span class="badge badge-warning"><h4 class="text-primary">Total Users in your institution: {{institution_user}} </h4></span>
                         </div>
                     </div>
                 </div>
                 {% else %}
-                    <div class="col-md-12 grid-margin stretch-card">
+                    <div class="col-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-wrap">
-                                <p class="card-title">Hello</p>
+                                <h3 class="card-title text-primary">You have added <span class="text-warning">{{students}}</span>  students so far</h3>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap">
+                                <p class="card-title text-primary">The school has added <span class="text-warning">{{overall_students}}</span>  students so far</p>
                         </div>
                         </div>
                     </div>

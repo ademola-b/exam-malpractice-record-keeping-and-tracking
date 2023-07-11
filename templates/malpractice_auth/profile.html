@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    {% include 'utils/styles.html' %}
+{% endblock style %}
+
+
+{% block body %}
+{% comment %} <div class="container-scroller"> {% endcomment %}
+    <!-- partial:../../partials/_navbar.html -->
+    {% include 'utils/navbar.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      {% include 'utils/aside.html' %}
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+       
+            {% include 'utils/messages.html' %}
+          <div class="row">
+            <div class="col-6 stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title text-primary">Profile</h4>
+                  <div class="d-flex">
+                    <div class="col-sm-10 align-self-center justify-content-end">
+                        <img src="{{user_data.picture.url}}" alt="Profile Pic" width="100px" height="100px" style="border-radius: 50%;">
+                    </div>
+                  </div>
+                  <br>
+                  
+                  <div class="form-group col-12">
+                    {% if request.user.is_institution_admin %}
+                    <label for="email">Email Address</label>
+                    <input type="text" class="form-control" disabled value="{{user_data.admin_id.email}}">
+                    {% else %}
+                    <label for="email">Name</label>
+                    <input type="text" class="form-control" disabled value="{{user_data.name}}">
+                    <br>
+                    <label for="email">Email Address</label>
+                    <input type="text" class="form-control" disabled value="{{user_data.user_id.email}}">
+
+                    <span class="text-danger small">kindly notify your institution admin if your name and email are not correct</span>
+                    {% endif %}
+                  </div>
+
+                  {% if institution_form %}
+                    <form method="POST" class="forms-sample" enctype="multipart/form-data">
+                      {% csrf_token %}
+                          {% for field in institution_form %}
+                              <div class="form-group col-12">
+                                  {% if field.errors %}
+                                  <div class="alert alert-danger mt-2" role="alert">
+                                      {{ field.errors }}
+                                  </div>
+                                  {% endif %}
+                                  <label>{{field.label}}</label>
+                                  {{field}}
+                              </div>
+                          {% endfor %}
+                      <button type="submit" name="update_profile" class="btn btn-primary">Update</button>
+                      <a href="{% url 'accounts:change_password' %}" class="btn btn-outline-primary">Change Password</a>
+  
+                    </form>
+                 
+                  {% endif %}
+                    
+                </div>
+              </div>
+            </div>
+            {% comment %} <div class="col-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title text-primary">Change Password</h4>
+                  {% if form %}
+                    <form method="POST" class="forms-sample">
+                      {% csrf_token %}
+                              <div class="form-group col-12">
+                                  {% if form.old_password.errors %}
+                                  <div class="alert alert-danger mt-2" role="alert">
+                                      {{ form.old_password.errors }}
+                                  </div>
+                                  {% endif %}
+                                  <label>Old Password</label>
+                                  {{form.old_password}}
+                              </div>
+                              <div class="form-group col-12">
+                                  {% if form.new_password1.errors %}
+                                  <div class="alert alert-danger mt-2" role="alert">
+                                      {{ form.new_password1.errors }}
+                                  </div>
+                                  {% endif %}
+                                  <label>New Password</label>
+                                  {{form.new_password1}}
+                              </div>
+                              <div class="form-group col-12">
+                                  {% if form.new_password2.errors %}
+                                  <div class="alert alert-danger mt-2" role="alert">
+                                      {{ form.new_password2.errors }}
+                                  </div>
+                                  {% endif %}
+                                  <label>Confirm Password</label>
+                                  {{form.new_password2}}
+                              </div>
+                      <button type="submit" name="change_password" class="btn btn-primary">Change Password</button>
+  
+                    </form>
+                 
+                  {% endif %}
+                    
+                </div>
+              </div>
+            </div> {% endcomment %}
+           
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        {% include 'utils/footer.html' %}
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  {% comment %} </div> {% endcomment %}
+{% endblock body %}
