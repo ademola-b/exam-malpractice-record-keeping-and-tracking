@@ -228,47 +228,49 @@ class TrackAccusedView(ListView, FormView):
                 image = face_recognition.load_image_file(image_file)
                 uploaded_face_encodings = face_recognition.face_encodings(image)
 
-
                 if len(uploaded_face_encodings) > 0:
                     for profile in FillFormModel.objects.all():
                         profile_image = face_recognition.load_image_file(profile.image.path)
-                        profile_image_encoding = face_recognition.face_encodings(profile_image)[0]
+                        profile_image_encodings = face_recognition.face_encodings(profile_image)
 
-                        is_same = face_recognition.compare_faces([profile_image_encoding], uploaded_face_encodings[0])[0]
+                        if len(profile_image_encodings) > 0:
+                            profile_image_encoding = profile_image_encodings[0]
 
-                        if is_same:
-                            # find image distance
-                            distance = face_recognition.face_distance([profile_image_encoding], uploaded_face_encodings[0])
+                            is_same = face_recognition.compare_faces([profile_image_encoding], uploaded_face_encodings[0])[0]
 
-                            best_image = np.argmin(distance)
-                            print(distance[best_image])
-                            messages.success(request, f"Best Image: {distance[best_image]}")
+                            if is_same:
+                                # find image distance
+                                distance = face_recognition.face_distance([profile_image_encoding], uploaded_face_encodings[0])
 
-                            if distance[best_image] < 0.6:
-                                result = f"Face Found for {profile.name}"
-                                messages.danger(request, result) 
-                                messages.success(request, f"{best_image}") 
-                                
-                                profile = FillFormModel.objects.get(name = profile.name)
-                                custom_query.append(profile)
+                                best_image = np.argmin(distance)
+                                # print(distance[best_image])
+                                # messages.success(request, f"Best Image: {distance[best_image]}")
+
+                                if distance[best_image] < 0.6:
+                                    result = f"Face Found for {profile.name}"
+                                    # messages.warning(request, result) 
+                                    # messages.success(request, f"{best_image}") 
+
+                                    profile = FillFormModel.objects.get(name=profile.name)
+                                    custom_query.append(profile)
+                                else:
+                                    messages.warning(request, "No close image found") 
+
                             else:
-                                messages.warning(request, "No close image found") 
-                                
-
+                                result = ''
+                                # messages.warning(request, f"No face found for {profile.name}")
+                                print(f"No face found for {profile.name}")
                         else:
-                            result = ''
-                            messages.warning(request, f"No face found for {profile.name}")
-                            print(f"No face found for {profile.name}")
+                            messages.warning(request, f"No face found in {profile.name} image")
+
                 else:
                     result = "No Face Detected"
                     messages.warning(request, result)
+ 
                 
                 return render(request, self.template_name, {'result':result, 'form':form, 'image_form':image_form,'object_list':custom_query})
             
-
-
-        # return render(request, self.template_name, {'form':form, 'image_form':image_form, 'object_list':custom_query})
-        
+                    
 class AccusedDetailView(DetailView):
     model = FillFormModel
     template_name = "malpractice_tracking/accused-detail.html"
